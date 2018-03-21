@@ -1,0 +1,11 @@
+com/scfl/base/entity/BaseEntity.class
+com/scfl/base/controller/BaseController.class
+com/scfl/base/enumerate/ModuleEnum.class
+com/scfl/base/enumerate/RequestTypeEnum.class
+com/scfl/base/enumerate/ClzModuleEnum.class
+com/scfl/App.class
+com/scfl/base/utils/Result.class
+com/scfl/base/utils/ApplicationConst.class
+com/scfl/base/enumerate/CodeEnum.class
+com/scfl/base/enumerate/BizExceptionEnum.class
+com/scfl/base/utils/CustomStringProcess.class

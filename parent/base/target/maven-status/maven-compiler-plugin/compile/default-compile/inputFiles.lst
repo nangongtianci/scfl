@@ -1,0 +1,11 @@
+/home/ylw/workspace/20180315/parent/base/src/main/java/com/scfl/base/entity/BaseEntity.java
+/home/ylw/workspace/20180315/parent/base/src/main/java/com/scfl/base/enumerate/RequestTypeEnum.java
+/home/ylw/workspace/20180315/parent/base/src/main/java/com/scfl/base/enumerate/CodeEnum.java
+/home/ylw/workspace/20180315/parent/base/src/main/java/com/scfl/base/enumerate/ModuleEnum.java
+/home/ylw/workspace/20180315/parent/base/src/main/java/com/scfl/base/App.java
+/home/ylw/workspace/20180315/parent/base/src/main/java/com/scfl/base/utils/Result.java
+/home/ylw/workspace/20180315/parent/base/src/main/java/com/scfl/base/utils/CustomStringProcess.java
+/home/ylw/workspace/20180315/parent/base/src/main/java/com/scfl/base/enumerate/BizExceptionEnum.java
+/home/ylw/workspace/20180315/parent/base/src/main/java/com/scfl/base/controller/BaseController.java
+/home/ylw/workspace/20180315/parent/base/src/main/java/com/scfl/base/enumerate/ClzModuleEnum.java
+/home/ylw/workspace/20180315/parent/base/src/main/java/com/scfl/base/utils/ApplicationConst.java

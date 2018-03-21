@@ -1,0 +1,63 @@
+########################################## profile 配置 ###################################################################
+
+###################  项目启动端口  ###################
+server:
+  port: 8080
+
+###################  mybatis-plus配置  ###################
+mybatis-plus:
+  mapper-locations: classpath:mybatis/*/*Mapper.xml
+  typeAliasesPackage: com.scfl.dispatching.center.*.entity
+  global-config:
+    id-type: 0  #0:数据库ID自增 1:用户输入ID   2:用户输入id   3:全局唯一id(IdWorker)   4:全局唯一ID(uuid)
+    db-column-underline: false
+    refresh-mapper: true  #刷新mapper 调试神器
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: true #配置的缓存的全局开关
+    lazyLoadingEnabled: true #延时加载的开关
+    multipleResultSetsEnabled: true #开启的话，延时加载一个属性时会加载该对象全部属性，否则按需加载属性
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl #打印sql语句,调试用
+
+###################  日志配置配置  ###################
+logging:
+  level: debug
+  file: logs/nohup.log
+
+###################  spring配置  ###################
+spring:
+  http:
+    converters:
+      preferred-json-mapper: fastjson
+  devtools:
+    restart:
+      enabled: true
+  profiles:
+    active: dev
+
+
+
+##########################################################
+###################  开发环境的profile  ###################
+##########################################################
+spring:
+  profiles: dev
+  datasource:
+      url: jdbc:mysql://127.0.0.1:3306/dispatching_center?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: root
+      filters: log4j,wall,mergeStat
+
+##########################################################
+###################  生产环境的profile  ###################
+##########################################################
+spring:
+  profiles: product
+  datasource:
+      url: jdbc:mysql://127.0.0.1:3306/dispatching_center?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull
+      username: root
+      password: root
+      filters: log4j,wall,mergeStat
+
+
+
