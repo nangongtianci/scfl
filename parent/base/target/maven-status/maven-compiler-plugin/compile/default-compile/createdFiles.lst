@@ -6,6 +6,11 @@ com/scfl/base/enumerate/ClzModuleEnum.class
 com/scfl/App.class
 com/scfl/base/utils/Result.class
 com/scfl/base/utils/ApplicationConst.class
-com/scfl/base/enumerate/CodeEnum.class
 com/scfl/base/enumerate/BizExceptionEnum.class
+com/scfl/base/exception/BizException.class
 com/scfl/base/utils/CustomStringProcess.class
+com/scfl/base/page/Pagination.class
+com/scfl/base/job/BaseJobTask.class
+com/scfl/base/page/PageParam.class
+com/scfl/base/enumerate/CodeEnum.class
+com/scfl/base/enumerate/JobReportEnum.class

@@ -1,14 +1,26 @@
 package com.scfl.dispatching.center.config.mybatis;
 
-import com.scfl.dispatching.center.config.druid.DruidProperties;
+import com.baomidou.mybatisplus.enums.DBType;
+import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import com.baomidou.mybatisplus.spring.MybatisSqlSessionFactoryBean;
+import com.baomidou.mybatisplus.spring.boot.starter.MybatisPlusProperties;
+import com.baomidou.mybatisplus.spring.boot.starter.SpringBootVFS;
+import org.apache.ibatis.mapping.DatabaseIdProvider;
+import org.apache.ibatis.plugin.Interceptor;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.DefaultResourceLoader;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
-import com.alibaba.druid.pool.DruidDataSource;
-import com.baomidou.mybatisplus.enums.DBType;
-import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
+import javax.sql.DataSource;
+import java.io.IOException;
 
 /**
  * MybatisPlus配置
@@ -17,30 +29,73 @@ import com.baomidou.mybatisplus.plugins.PaginationInterceptor;
  * @param
  * @return
  */
+@EnableTransactionManagement
 @Configuration
-@MapperScan(basePackages={"com.scfl.dispatching.center.mapper*"})
+@MapperScan(basePackages={"com.scfl.dispatching.center.mapper"})
 public class MybatisPlusConfig {
+    @Autowired
+    private DataSource dataSource;
 
     @Autowired
-    DruidProperties druidProperties;
+    private MybatisPlusProperties properties;
 
-    /**
-     * mybatis-plus分页插件
-     */
+    @Autowired
+    private ResourceLoader resourceLoader = new DefaultResourceLoader();
+
+    @Autowired(required = false)
+    private Interceptor[] interceptors;
+
+    @Autowired(required = false)
+    private DatabaseIdProvider databaseIdProvider;
+
     @Bean
     public PaginationInterceptor paginationInterceptor() {
-    	 PaginationInterceptor paginationInterceptor = new PaginationInterceptor();
-         paginationInterceptor.setDialectType(DBType.MYSQL.getDb());
-         return paginationInterceptor;
+        PaginationInterceptor page = new PaginationInterceptor();
+        page.setDialectType(DBType.MYSQL.getDb());
+        return page;
     }
 
     /**
-     * druid数据库连接池
+     * 这里全部使用mybatis-autoconfigure 已经自动加载的资源。不手动指定
+     * 配置文件和mybatis-boot的配置文件同步
+     * @return
      */
-    @Bean(initMethod = "init", destroyMethod="close")
-    public DruidDataSource dataSource() {
-        DruidDataSource dataSource = new DruidDataSource();
-        druidProperties.config(dataSource);
-        return dataSource;
+    @Bean
+    public MybatisSqlSessionFactoryBean mybatisSqlSessionFactoryBean() {
+        MybatisSqlSessionFactoryBean mybatisPlus = new MybatisSqlSessionFactoryBean();
+        mybatisPlus.setDataSource(dataSource);
+        mybatisPlus.setVfs(SpringBootVFS.class);
+        if (StringUtils.hasText(this.properties.getConfigLocation())) {
+            mybatisPlus.setConfigLocation(this.resourceLoader.getResource(this.properties.getConfigLocation()));
+        }
+
+        mybatisPlus.setConfiguration(properties.getConfiguration());
+        if (!ObjectUtils.isEmpty(this.interceptors)) {
+            mybatisPlus.setPlugins(this.interceptors);
+        }
+
+        if (this.databaseIdProvider != null) {
+            mybatisPlus.setDatabaseIdProvider(this.databaseIdProvider);
+        }
+
+        if (StringUtils.hasLength(this.properties.getTypeAliasesPackage())) {
+            mybatisPlus.setTypeAliasesPackage(this.properties.getTypeAliasesPackage());
+        }else{
+            mybatisPlus.setTypeAliasesPackage("com.scfl.dispatching.center.entity");
+        }
+
+        if (StringUtils.hasLength(this.properties.getTypeHandlersPackage())) {
+            mybatisPlus.setTypeHandlersPackage(this.properties.getTypeHandlersPackage());
+        }
+
+        try {
+            ResourcePatternResolver resolver = new PathMatchingResourcePatternResolver();
+            mybatisPlus.setMapperLocations(resolver.getResources("classpath:mybatis/mapper/*.xml"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        return mybatisPlus;
     }
+
 }

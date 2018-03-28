@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scfl.dispatching.center.mapper.JobMapper">
+   <!--
+    <resultMap id="resultMap" type="java.util.Map">
+        <result property="JOBNAME" column="JOB_NAME"></result>
+        <result property="JOBGROUP" column="JOB_GROUP"></result>
+        <result property="JOBCLASSNAME" column="JOB_CLASS_NAME"></result>
+        <result property="TRIGGERNAME" column="TRIGGER_NAME"></result>
+        <result property="TRIGGERGROUP" column="TRIGGER_GROUP"></result>
+        <result property="REPEATINTERVAL" column="REPEAT_INTERVAL"></result>
+        <result property="TIMESTRIGGERED" column="TIMES_TRIGGERED"></result>
+    </resultMap>-->
+
+    <select id="selectJobAndTriggerDetails" resultType="map">
+        SELECT
+            QRTZ_JOB_DETAILS.JOB_NAME,
+            QRTZ_JOB_DETAILS.JOB_GROUP,
+            QRTZ_JOB_DETAILS.JOB_CLASS_NAME,
+            QRTZ_TRIGGERS.TRIGGER_NAME,
+            QRTZ_TRIGGERS.TRIGGER_GROUP,
+            QRTZ_SIMPLE_TRIGGERS.REPEAT_INTERVAL,
+            QRTZ_SIMPLE_TRIGGERS.TIMES_TRIGGERED
+        FROM
+            QRTZ_JOB_DETAILS
+        LEFT JOIN QRTZ_TRIGGERS ON QRTZ_JOB_DETAILS.JOB_NAME = QRTZ_TRIGGERS.JOB_NAME
+        LEFT JOIN QRTZ_SIMPLE_TRIGGERS ON QRTZ_TRIGGERS.TRIGGER_NAME = QRTZ_SIMPLE_TRIGGERS.TRIGGER_NAME
+        AND QRTZ_TRIGGERS.TRIGGER_GROUP = QRTZ_SIMPLE_TRIGGERS.TRIGGER_GROUP
+    </select>
+</mapper>

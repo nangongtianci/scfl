@@ -30,7 +30,6 @@
     <mybatisplus-spring-boot-starter.version>1.0.5</mybatisplus-spring-boot-starter.version>
     <mybatisplus.version>2.1.9</mybatisplus.version>
     <spring-boot>2.0.0.RELEASE</spring-boot>
-    <!--项目版本-->
     <base.version>1.0-SNAPSHOT</base.version>
     <dispatching.center.version>1.0-SNAPSHOT</dispatching.center.version>
   </properties>
@@ -40,6 +39,11 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
+      <version>4.1</version>
     </dependency>
   </dependencies>
 
@@ -78,6 +82,44 @@
         <version>${fastjson.version}</version>
       </dependency>
 
+      <!-- jackson start -->
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-core-asl</artifactId>
+        <version>1.9.13</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-core</artifactId>
+        <version>2.8.3</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-databind</artifactId>
+        <version>2.8.3</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.dataformat</groupId>
+        <artifactId>jackson-dataformat-xml</artifactId>
+        <version>2.8.3</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.core</groupId>
+        <artifactId>jackson-annotations</artifactId>
+        <version>2.8.3</version>
+      </dependency>
+      <dependency>
+        <groupId>com.fasterxml.jackson.module</groupId>
+        <artifactId>jackson-module-jaxb-annotations</artifactId>
+        <version>2.8.3</version>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-mapper-asl</artifactId>
+        <version>1.9.13</version>
+      </dependency>
+      <!-- jackson end -->
+
       <!--热部署模块-->
       <dependency>
         <groupId>org.springframework.boot</groupId>
@@ -87,14 +129,16 @@
     </dependencies>
   </dependencyManagement>
 
-
   <build>
-    <plugins>
-        <plugin>
-          <groupId>org.springframework.boot</groupId>
-          <artifactId>spring-boot-maven-plugin</artifactId>
-        </plugin>
-    </plugins>
+    <pluginManagement>
+      <plugins>
+          <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <version>2.0.0.RELEASE</version>
+          </plugin>
+      </plugins>
+    </pluginManagement>
   </build>
 
   <repositories>

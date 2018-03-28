@@ -38,6 +38,10 @@ public class CustomStringProcess {
         return String.format(IS_NOT_EXISTS, moduleEnum.getName());
     }
 
+    public static final String assignModuleIsNotExists(String arg){
+        return String.format(IS_NOT_EXISTS, arg);
+    }
+
 
     /**
      * @desc 针对枚举类型不在取值范围内错误通用提醒

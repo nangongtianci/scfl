@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class Generator {
     public static void main(String[] args) {
-            generate("dispatching_center","t_job_class_info","t_job_class_method_info");
+            generate("dispatching_center","t_outer_invoking_jar");
     }
 
     private static void generate(String model,String ... tableName){
